@@ -10,7 +10,7 @@ parameter_extraction <- function(fit, numsub, names=NULL){
     suj_params <- rstan::extract(fit, permuted = TRUE)
     suj_params %<>% map(., function(x) colMeans(as.matrix(x), dims = 1)) %>% map(unname)
     suj_params <- suj_params[as.vector(map(suj_params, length)==numsub)];
-    suj_params %<>% as.data.frame %>% select(-contains("_pr"), -contains("_lik")) 
+    suj_params %<>% as.data.frame %>% dplyr::select(-contains("_pr"), -contains("_lik")) 
     row.names(suj_params) <- names
     suj_params
 }
